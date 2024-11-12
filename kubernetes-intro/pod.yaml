@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: homework
+spec:
+  containers:
+    - name: nginx
+      image: joseluisq/static-web-server:2
+      env:
+        - name: SERVER_ROOT
+          value: "/homework"
+        - name: SERVER_PORT
+          value: "8000"
+
+      lifecycle:
+        preStop:
+          exec:
+            command: ["/bin/sh", "-c", "rm  /homework/index.html"]
+      ports:
+        - containerPort: 8000
+      volumeMounts:
+        - name: data
+          mountPath: /homework
+  initContainers:
+    - name: init-container
+      image: busybox:latest
+      command:
+        [
+          "sh",
+          "-c",
+          "echo '<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>' > /init/index.html",
+        ]
+      restartPolicy: Always
+      volumeMounts:
+        - name: data
+          mountPath: /init
+
+  volumes:
+    - name: data
+      emptyDir: {}
