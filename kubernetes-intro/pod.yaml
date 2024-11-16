@@ -12,7 +12,6 @@ spec:
           value: "/homework"
         - name: SERVER_PORT
           value: "8000"
-
       lifecycle:
         preStop:
           exec:
@@ -35,7 +34,6 @@ spec:
       volumeMounts:
         - name: data
           mountPath: /init
-
   volumes:
     - name: data
       emptyDir: {}
