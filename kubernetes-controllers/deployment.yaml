@@ -1,22 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
+  namespace: homework
+  name: static-web-server
   labels:
     app: static-web-server
-  name: static-web-server
-  namespace: homework
 spec:
   replicas: 3
   selector:
     matchLabels:
       app: static-web-server
-  strategy: RollingUpdate
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: homework
+        app: static-web-server
     spec:
       containers:
         - image: joseluisq/static-web-server:2
@@ -29,10 +30,16 @@ spec:
           lifecycle:
             preStop:
               exec:
-              command: ["/bin/sh", "-c", "rm  /homework/index.html"]
+                command: ["/bin/sh", "-c", "rm  /homework/index.html"]
           readinessProbe:
-            exec:
-              command: ["/bin/sh", "-c", " cat /homework/index.html"]
+            httpGet:
+              path: /index.html
+              port: 8000
+            # exec:
+            #  command: ["/bin/sh", "-c", "cat /homework/index.html"]
+
+            initialDelaySeconds: 10
+            periodSeconds: 10
           ports:
             - containerPort: 8000
           volumeMounts:
