@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-web-server
+  namespace: hw3
+  labels:
+    app: static-web-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: static-web-server
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: static-web-server
+    spec:
+      containers:
+        - image: joseluisq/static-web-server:2
+          name: static-beb-server
+          env:
+            - name: SERVER_ROOT
+              value: "/homework"
+            - name: SERVER_PORT
+              value: "8000"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "rm  /homework/index.html"]
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: 8000
+            # exec:
+            #  command: ["/bin/sh", "-c", "cat /homework/index.html"]
+
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: data
+              mountPath: /homework
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: homework
+                    operator: In
+                    values:
+                      - "true"
+      initContainers:
+        - name: init-container
+          image: busybox:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "echo '<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>' > /init/index.html",
+            ]
+          restartPolicy: Always
+          volumeMounts:
+            - name: data
+              mountPath: /init
+      volumes:
+        - name: data
+          emptyDir: {}
