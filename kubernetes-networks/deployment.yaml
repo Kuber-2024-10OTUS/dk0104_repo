@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: homework
   name: static-web-server
+  namespace: hw3
   labels:
     app: static-web-server
 spec:
