@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hw-cmap
+  namespace: homework
+data:
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: homework
+  name: nginx-cmap
+data:
+  config.toml: |-
+    [general]
+    host = "::"
+    port = 80
+    root = "./public"
+    log-level = "error"
+    cache-control-headers = true
+    compression = true
+    compression-level = "default"
+    page404 = "./404.html"
+    page50x = "./50x.html"
+
+    http2 = false
+    http2-tls-cert = ""
+    http2-tls-key = ""
+    https-redirect = false
+    https-redirect-host = "localhost"
+    https-redirect-from-port = 80
+    https-redirect-from-hosts = "localhost"
+    directory-listing = false
+    directory-listing-order = 1
+    directory-listing-format = "html"
+    threads-multiplier = 1
+    grace-period = 0
+    log-remote-address = false
+    log-forwarded-for = false
+    trusted-proxies = []
+    redirect-trailing-slash = true
+    compression-static = true
+    health = false
+    maintenance-mode = false
+
+    [advanced]
+
+    [[advanced.redirects]]
+    source = "/homework/conf"
+    destination = "/conf/file/"
+    kind = 301
