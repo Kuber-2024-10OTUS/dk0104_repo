@@ -18,7 +18,7 @@ data:
     [general]
     host = "::"
     port = 80
-    root = "./public"
+    root = "./homework"
     log-level = "error"
     cache-control-headers = true
     compression = true
@@ -49,6 +49,6 @@ data:
     [advanced]
 
     [[advanced.redirects]]
-    source = "/homework/conf"
-    destination = "/conf/file/"
+    source = "/conf/file"
+    destination = "/homework/conf"
     kind = 301

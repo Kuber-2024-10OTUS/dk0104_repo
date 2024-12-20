@@ -5,6 +5,7 @@ metadata:
   namespace: homework
   annotations:
     storageclass.kubernetes.io/is-default-class: "false"
+
 provisioner: kubernetes.io/minikube-hostpath
 reclaimPolicy: Retain
 allowVolumeExpansion: true

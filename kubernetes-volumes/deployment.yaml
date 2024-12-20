@@ -27,6 +27,8 @@ spec:
               value: "/homework"
             - name: SERVER_PORT
               value: "8000"
+            - name: SERVER_CONFIG_FILE
+              value: "/homework/config"
           lifecycle:
             preStop:
               exec:
@@ -48,7 +50,7 @@ spec:
             - name: config-map
               mountPath: /homework/conf
             - name: nginx-config-map
-              mountPath: /homework/settings
+              mountPath: /homework/config
               readOnly: true
       affinity:
         nodeAffinity:

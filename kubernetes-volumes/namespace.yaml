@@ -4,5 +4,3 @@ metadata:
   creationTimestamp: null
   name: homework
   namespace: homework
-spec: {}
-status: {}
