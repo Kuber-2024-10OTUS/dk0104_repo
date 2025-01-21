@@ -28,6 +28,8 @@ spec:
               value: "/homework"
             - name: SERVER_PORT
               value: "8000"
+            - name: SERVER_CONFIG_FILE
+              value: "/homework/config"
           lifecycle:
             preStop:
               exec:
@@ -46,6 +48,11 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /homework
+            - name: config-map
+              mountPath: /homework/conf
+            - name: nginx-config-map
+              mountPath: /homework/config
+              readOnly: true
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -58,7 +65,7 @@ spec:
       initContainers:
         - name: init-container
           image: busybox:latest
-          command: ["/bin/sh", "-c"]
+          command:
             [
               "sh",
               "-c",
@@ -68,20 +75,27 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /init
-       - name: metrics
-         image: alpine/curl:8.9.1
-         volumeMounts:
-           - name: data
-             mountPath: /init
-         command: ["/bin/sh", "-c"]
-         args:
-          - |
-            SA=/var/run/secrets/kubernetes.io/serviceaccount
-            TOKEN=$(cat ${SA}/token)
-            NAMESPACE=$(cat ${SA}/namespace)
-            CACERT=${SA}/ca.crt
-            KUBEAPI=https://kubernetes.default.svc
-            curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${KUBEAPI}/metrics -o /init/metrics.html
+        - name: metrics
+          image: alpine/curl:8.9.1
+          volumeMounts:
+            - name: data
+              mountPath: /init
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              SA=/var/run/secrets/kubernetes.io/serviceaccount
+              TOKEN=$(cat ${SA}/token)
+              NAMESPACE=$(cat ${SA}/namespace)
+              CACERT=${SA}/ca.crt
+              KUBEAPI=https://kubernetes.default.svc
+              curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${KUBEAPI}/metrics -o /init/metrics.html
       volumes:
         - name: data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: hw-pvc
+        - name: config-map
+          configMap:
+            name: hw-cmap
+        - name: nginx-config-map
+          configMap:
+            name: nginx-cmap
