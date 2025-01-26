@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name  }}
+  namespace: {{ .Values.namespace }}
+  labels:
+     app: {{ .Values.deployment.name }}
+
+spec:
+  replicas: {{.Values.deployment.spec.replicas}}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name}}
+  strategy:
+    type: {{ .Values.deployment.spec.strategy.type }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.deployment.spec.strategy.rollingUpdate.maxUnavailable }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      serviceAccountName: {{ .Values.deployment.serviceAccountName }}
+      containers:
+        - image: "{{ .Values.deployment.image.name }} : {{ .Values.deployment.image.version }}"
+          name: {{ .Values.deployment.name }}
+          env:
+            - name: SERVER_ROOT
+              value: {{ .Values.deployment.serverSettings.root }}
+            - name: SERVER_PORT
+              volue: {{ .Values.deployment.serverSettings.port }}
+            - name: SERVER_CONFIG_FILE
+              value: {{ .Values.deployment.serverSettings.configFile
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh","-c","rm /homework/index.html"]
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: {{ .Values.deployment.serverSettings.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          ports:
+            - containerPort: {{ .Values.deployment.serverSettings.port }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.deployment.serverSettings.root }}
+            - name: config-map
+              mountPath: {{ .Values.deployment.configMapPath }}
+              readOnly: true
+      affinity:
+         nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: homework
+                    operator: In
+                    values:
+                      - "true"
+      initContainers:
+        - name: init-container
+          image: "{{ .Values.deployment.initcontainer.name}} : {{ .Values.deployment.initcontainer.version }}
+          command:
+            [
+              "sh",
+              "-c",
+              "echo '<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>' > /init/index.html",
+            ]
+          restartPolicy: Always
+          volumeMounts:
+            - name: data
+              mountPath: /init
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: hw-pvc
+        - name: config-map
+          configMap:
+            name: {{ .Values.deployment.volumes.configmaps.defaultConfigMapName }}
+        - name: nginx-config-map
+          configMap:
+            name: {{ .Values.deployment.volumes.configmaps.nginxConfigMapName }}
