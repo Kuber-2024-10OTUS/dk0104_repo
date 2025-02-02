@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: { { include "hwChart.default.name" . } }
+  namespace: homework
+spec:
+  volumeName: hw-pv
+  accessModes: { { .Values.pvc.assessModes } }
+  storageClassName: { { .Values.pvc.storageClassName } }
+  resources:
+    requests:
+      storage: { { .Valuse.pvc.res.req.storage } }

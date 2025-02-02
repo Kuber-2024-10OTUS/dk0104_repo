@@ -1,15 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "hwChart.fullname" . }}
-  labels:
-    {{- include "hwChart.labels" . | nindent 4 }}
+  name: { { include "hwChart.name" . } }
+  labels: &labels { { - include "hwChart.labels" . | nindent 4 } }
 spec:
-  type: {{ .Values.service.type }}
+  type: { { .Values.service.type } }
+  selector: *labels
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "hwChart.selectorLabels" . | nindent 4 }}
+    - port: { { .Values.service.port } }
+      targetPort: { { .Values.service.targetPort } }
+      name: { { .Values.service.portName } }

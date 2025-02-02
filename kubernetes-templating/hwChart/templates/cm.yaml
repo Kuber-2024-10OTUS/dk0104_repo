@@ -12,7 +12,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   namespace: homework
-  name: nginx-cmap
+  name: { { include "my-chart.name" . } }
 data:
   config.toml: |-
     [general]

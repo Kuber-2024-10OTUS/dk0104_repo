@@ -22,7 +22,7 @@ spec:
     spec:
       serviceAccountName: {{ .Values.deployment.serviceAccountName }}
       containers:
-        - image: "{{ .Values.deployment.image.name }} : {{ .Values.deployment.image.version }}"
+        - image: "{{ .Values.image.name }} : {{ .Values.image.tag }}"
           name: {{ .Values.deployment.name }}
           env:
             - name: SERVER_ROOT

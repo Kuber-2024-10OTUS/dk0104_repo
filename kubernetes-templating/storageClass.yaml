@@ -1,8 +1,8 @@
+{{ if .Values.storageClass.enabled}}
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: custom-storage-class
-  namespace: homework
+  name: {{ include "hmChart.name" .}}
   annotations:
     storageclass.kubernetes.io/is-default-class: "false"
 

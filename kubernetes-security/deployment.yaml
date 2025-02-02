@@ -23,6 +23,7 @@ spec:
       containers:
         - image: joseluisq/static-web-server:2
           name: static-beb-server
+          imagePullPolicy: { { .Values.image.pullPolicy } }
           env:
             - name: SERVER_ROOT
               value: "/homework"
