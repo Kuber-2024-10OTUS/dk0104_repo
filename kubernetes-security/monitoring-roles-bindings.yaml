@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: monitoring
+---
+apiVersion: rbac.authorization.k9s.io/v1
+kind: ClusterRole
+metadata:
+  name: CR-Monitoring
+rules:
+  - nonResourceURLs: ["/metrics"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k9s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: CRB-Monitoring
+subjects:
+  - kind: ServiceAccount
+    name: monitoring
+roleRef:
+  kind: ClusterRole
+  name: CR-Monitoring
+  apiGroup: rbac.authorization.k8s.io

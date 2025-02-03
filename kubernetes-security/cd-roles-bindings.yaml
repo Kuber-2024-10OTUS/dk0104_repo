@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cd
+---
+apiVersion: rbac.authorization.k9s.io/v1
+kind: Role
+metadata:
+  name: R-cd
+rules:
+  - apiGroups: ['*']
+    resources: ['*']
+    verbs: ['*']
+---
+apiVersion: rbac.authorization.k9s.io/v1
+kind: RoleBinding
+metadata:
+  name: RB-cd
+subjects:
+  - kind: ServiceAccount
+    name: cd
+roleRef:
+  kind: Role
+  name: R-cd
+  apiGroup: rbac.authorization.k8s.io
