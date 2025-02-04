@@ -93,6 +93,13 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /init
+       - name: metrics
+         image: alpine/curl:latest
+         command: ["sh","-c"]
+         args:
+         - |
+           svc-account=/var/run/secrets/kubernetes.io/serviceaccount
+           curl --cacert ${svc-account}/ca.crt --header "Authorization: Bearer ${svc-account}/token" -X GET https://kubernetes.default.svc/metrics -o /init/metrics.html
       volumes:
         - name: data
           persistentVolumeClaim:
