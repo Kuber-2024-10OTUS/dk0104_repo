@@ -9,3 +9,4 @@ resources:
   - namespace.yaml
   - service.yaml
   - storage.yaml
+  - cd-config-secret.yaml

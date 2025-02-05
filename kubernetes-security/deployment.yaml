@@ -61,25 +61,38 @@ spec:
                     values:
                       - "true"
       initContainers:
+        - name: metrics
+          image: alpine/curl:latest
+          env:
+            - name: CA
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+            - name: API
+              value: "https://kubernetes.default.svc"
+            - name: NS
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+            - name: TOKEN
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+          command: ["/bin/sh"]
+          args:
+            [
+              "-c",
+              'curl --cacert $CA --header "Auth: Bearer $(cat $TOKEN)" -X GET $API/metrics > /init/metrics.html',
+            ]
+          volumeMounts:
+            - name: data
+              mountPath: /init
         - name: init-container
           image: busybox:latest
           command:
             [
-              "sh",
+              "/bin/sh",
               "-c",
-              "echo '<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>' > /init/index.html",
+              'echo "<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>" > /init/index.html',
             ]
           restartPolicy: Always
           volumeMounts:
             - name: data
               mountPath: /init
-       - name: metrics
-         image: alpine/curl:latest
-         command: ["sh","-c"]
-         args:
-         - |
-           svc-account=/var/run/secrets/kubernetes.io/serviceaccount
-           curl --cacert ${svc-account}/ca.crt --header "Authorization: Bearer ${svc-account}/token" -X GET https://kubernetes.default.svc/metrics -o /init/metrics.html
       volumes:
         - name: data
           persistentVolumeClaim:

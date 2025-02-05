@@ -3,24 +3,18 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: cd
+  namespace: homework
 ---
-apiVersion: rbac.authorization.k9s.io/v1
-kind: Role
-metadata:
-  name: R-cd
-rules:
-  - apiGroups: ['*']
-    resources: ['*']
-    verbs: ['*']
----
-apiVersion: rbac.authorization.k9s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: RB-cd
+  name: admin-cd-binding
+  namespace: homework
 subjects:
   - kind: ServiceAccount
     name: cd
+    namespace: homework
 roleRef:
-  kind: Role
-  name: R-cd
+  kind: ClusterRole
+  name: admin
   apiGroup: rbac.authorization.k8s.io
