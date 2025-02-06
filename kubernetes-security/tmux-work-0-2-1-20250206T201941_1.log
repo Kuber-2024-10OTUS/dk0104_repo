@@ -1,0 +1,42 @@
+clear[6 qclearaear[6 qclaearubectl config --kubeconfig=homework-kubeconfig set-cluster minikube --server=https://$(minikube ip):8443 --certificate-authority=$HOME/.minikube/ca.crt[6 qM[40C$(minikube[3C)[1B[54DM[45Dkubectl get secret/cd-config-secret -n homework -o json | jq -r .data.token | base64 -d > permanent_token                                              [46D[6 qM[1Ckubectl[51Cjq[18Cbase64 -d > permanent_token[6 q[?1l>[?2004l[0 q
+kkubectl\%                                                                                                          k..e/dk0104_repo\]7;file://mars/home/denk/source/dk0104_repo\[J
+dk0104_repo on  kubernetes-security [?]
+➜ [6 q[6 q[?2004hkubectl get secret/cd-config-secret -n homework -o json | jq -r .data.token | base64 -d > permanent_token[6 qM[1Ckubectl[51Cjq[18Cbase64[4C> permanent_tokenM[1Cclear[1BM[7C[6 qkubectl get secret/cd-config-secret -n homework -o json | jq -r .data.token | base64 -d > permanent_token[6 qM[5Cctl[51Cjq[18Cbase64[4C> permanent_token[6 qM[105C[6 q[1Bn.[6 qM[90Cpermanent_token[1C[6 q[6 qn [6 qM[91Cpermanent_tokenM[104C[6 q[6 q[6 q[1Bn.[6 qM[90Cpermanent_token[1C[6 q[6 q[6 qn [6 qM[91Cpermanent_tokenM[104C[6 q[6 q[?2004l[1B
+%                                                                                                          k..e/dk0104_repo\]7;file://mars/home/denk/source/dk0104_repo\[J
+dk0104_repo on  kubernetes-security [?]
+➜ [6 q[6 q[?2004hkubectl get secret/cd-config-secret -n homework -o json | jq -r .data.token | base64 -d > permanent_token[6 qM[1Ckubectl[51Cjq[18Cbase64[4C> permanent_tokenM[1Cclear[1BM[7C[6 qaear[6 qclaearubectl config --kubeconfig=homework-kubeconfig set-cluster minikube --server=https://$(minikube ip):8443 --certificate-authority=$HOME/.minikube/ca.crt[6 qM[40C$(minikube[3C)[1B[54D[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 qM[105C[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 q[6 qkubectl config -[19P[11C=homework-kubeconfig set-cluster minikube --server=https://$(minikube ip):8443 --certificate-authority=$HOME/.minikube/ca.crtM[45D[6 qkubectl[6 q[?1l>[?2004l[0 q[1B
+kkubectl\Cluster "minikube" set.
+%                                                                                                          k..e/dk0104_repo\]7;file://mars/home/denk/source/dk0104_repo\[J
+dk0104_repo on  kubernetes-security [?]
+➜ [6 q[6 q[?2004hkkubectl config --kubeconfig=homework-kubeconfig set-credentials cd --token=$(cat ./permanent_token)[99Dkubectl config --kubeconfig=homework-kubeconfig set-credentials cd --token=$(cat ./permanent_token)[99Dkubectl config --kubeconfig=homework-kubeconfig set-credentials cd --token=$(cat ./permanent_token)[6 q[6 q[99Dkubectl[68C$(cat ./permanent_token)[?1l>[?2004l[0 q
+kkubectl\User "cd" set.
+%                                                                                                          k..e/dk0104_repo\]7;file://mars/home/denk/source/dk0104_repo\[J
+dk0104_repo on  kubernetes-security [?]
+➜ [6 q[6 q[?2004hkkubectl config --kubeconfig=homework-kubeconfig set-context cd@minikube --cluster=minikube --namespace=h oomework --user=cdM[15Dkubectl config --kubeconfig=homework-kubeconfig set-context cd@minikube --cluster=minikube --namespace=homework --user=cdM[15Dkubectl config --kubeconfig=homework-kubeconfig set-context cd@minikube --cluster=minikube --namespace=homework --user=cd[6 q[6 qM[15Dkubectl[1B[8C[?1l>[?2004l[0 q
+kkubectl\Context "cd@minikube" created.
+%                                                                                                          k..e/dk0104_repo\]7;file://mars/home/denk/source/dk0104_repo\[J
+dk0104_repo on  kubernetes-security [?]
+➜ [6 q[6 q[?2004hkkubectl config --kubeconfig=homework-kubeconfig use-context cd@minikube[71Dkubectl config --kubeconfig=homework-kubeconfig use-context cd@minikube[71Dkubectl config --kubeconfig=homework-kubeconfig use-context cd@minikube[6 q[6 q[71Dkubectl[64C[?1l>[?2004l[0 q
+kkubectl\Switched to context "cd@minikube".
+%                                                                                                          k..e/dk0104_repo\]7;file://mars/home/denk/source/dk0104_repo\[J
+dk0104_repo on  kubernetes-security [?]
+➜ [6 q[6 q[?2004hkkubectl config --kubeconfig=homework-kubeconfig view[52Dkubectl config --kubeconfig=homework-kubeconfig view[52Dkubectl config --kubeconfig=homework-kubeconfig view[6 q[6 q[52Dkubectl[45C[?1l>[?2004l[0 q
+kkubectl\apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /home/denk/.minikube/ca.crt
+    server: https://192.168.49.2:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    namespace: homework
+    user: cd
+  name: cd@minikube
+current-context: cd@minikube
+kind: Config
+preferences: {}
+users:
+- name: cd
+  user:
+    token: REDACTED
