@@ -5,7 +5,6 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
      app: {{ .Values.deployment.name }}
-
 spec:
   replicas: {{.Values.deployment.spec.replicas}}
   selector:
@@ -14,7 +13,7 @@ spec:
   strategy:
     type: {{ .Values.deployment.spec.strategy.type }}
     rollingUpdate:
-      maxUnavailable: {{ .Values.deployment.spec.strategy.rollingUpdate.maxUnavailable }}
+      maxUnavailable: {{ .Values.deployment.spec.strategy }}
   template:
     metadata:
       labels:
@@ -49,6 +48,7 @@ spec:
             - name: config-map
               mountPath: {{ .Values.deployment.configMapPath }}
               readOnly: true
+      serviceAccountName: {{ .Values.deployment.serviceAccountName }}
       affinity:
          nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -59,6 +59,27 @@ spec:
                     values:
                       - "true"
       initContainers:
+        - name: metrics
+          image: alpine/curl:latest
+          env:
+             - name: CA
+               value: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+             - name: API
+               value: "https://kubernetes.default.svc"
+             - name: NS
+               value: "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+             - name: TOKEN
+               value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+          command: ["/bin/sh"]
+          args:
+             [
+               "-c",
+               'curl --cacert $CA --header "Auth: Bearer $(cat $TOKEN)" -X GET $API/
+               metrics > /init/metrics.html',
+             ]
+          volumeMounts:
+             - name: data
+               mountPath: /init  Not Committed Yet
         - name: init-container
           image: "{{ .Values.deployment.initcontainer.name}} : {{ .Values.deployment.initcontainer.version }}
           command:
@@ -77,7 +98,7 @@ spec:
             claimName: hw-pvc
         - name: config-map
           configMap:
-            name: {{ .Values.deployment.volumes.configmaps.defaultConfigMapName }}
+            name: {{ .Values.deployment.volumes.defaultConfigMapName }}
         - name: nginx-config-map
           configMap:
-            name: {{ .Values.deployment.volumes.configmaps.nginxConfigMapName }}
+            name: {{ .Values.deployment.volumes.nginxConfigMapName }}

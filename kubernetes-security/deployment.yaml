@@ -19,11 +19,9 @@ spec:
       labels:
         app: static-web-server
     spec:
-      serviceAccountName: monitoring
       containers:
         - image: joseluisq/static-web-server:2
           name: static-beb-server
-          imagePullPolicy: { { .Values.image.pullPolicy } }
           env:
             - name: SERVER_ROOT
               value: "/homework"
@@ -39,8 +37,6 @@ spec:
             httpGet:
               path: /index.html
               port: 8000
-            # exec:
-            #  command: ["/bin/sh", "-c", "cat /homework/index.html"]
 
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -54,6 +50,7 @@ spec:
             - name: nginx-config-map
               mountPath: /homework/config
               readOnly: true
+      serviceAccountName: monitoring
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -64,13 +61,33 @@ spec:
                     values:
                       - "true"
       initContainers:
+        - name: metrics
+          image: alpine/curl:latest
+          env:
+            - name: CA
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+            - name: API
+              value: "https://kubernetes.default.svc"
+            - name: NS
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/namespace"
+            - name: TOKEN
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+          command: ["/bin/sh"]
+          args:
+            [
+              "-c",
+              'curl --cacert $CA --header "Auth: Bearer $(cat $TOKEN)" -X GET $API/metrics > /init/metrics.html',
+            ]
+          volumeMounts:
+            - name: data
+              mountPath: /init
         - name: init-container
           image: busybox:latest
           command:
             [
-              "sh",
+              "/bin/sh",
               "-c",
-              "echo '<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>' > /init/index.html",
+              'echo "<!DOCTYPE html><html><body><h1>My First Heading</h1><p>My first paragraph.</p></body></html>" > /init/index.html',
             ]
           restartPolicy: Always
           volumeMounts:
