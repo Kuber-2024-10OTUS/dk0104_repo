@@ -1,12 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: { { include "hwChart.name" . } }
-  labels: &labels { { - include "hwChart.labels" . | nindent 4 } }
+  namespace: { { .Values.namespace } }
+  labels:
+    app: { { .Values.webServexService.name } }
+  name: { { .Values.webServerService.name } }
 spec:
-  type: { { .Values.service.type } }
-  selector: *labels
   ports:
-    - port: { { .Values.service.port } }
-      targetPort: { { .Values.service.targetPort } }
-      name: { { .Values.service.portName } }
+    - name: { { .Values.webServerService.name } }
+      port: { { .Values.webServerService.port } }
+      protocol: { { .Values.webServerService.protocol } }
+      targetPort: { { .Values.webServerService.targetPort } }
+  selector:
+    app: { { .Values.webServerService.appSelector } }
+  type: ClusterIP

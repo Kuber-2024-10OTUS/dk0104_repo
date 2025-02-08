@@ -1,13 +1,27 @@
-{{ if .Values.roleBinding.enabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: monitoring
+  namespace: { { .Release.Namespace } }
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: { { .Values.monitoring.clusterRoleName } }
+rules:
+  - nonResourceURLs: ["/metrics"]
+    verbs: ["get"]
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Values.clusterRoleBindig.name}}
+  name: { { .Values.monitoring.clusterRoleBindingName } }
 subjects:
   - kind: ServiceAccount
-    name: {{ .Values.clusterRoleBindig.name }}
-    namespace: {{ .Release.Namespace}}
+    name: monitoring
+    namespace: { { .Release.Namespace } }
 roleRef:
   kind: ClusterRole
-  name: {{ .Values.clusterRoleBinding.roleMonitoringName}}
+  name: { { .Values.monitoring.clusterRoleName } }
   apiGroup: rbac.authorization.k8s.io

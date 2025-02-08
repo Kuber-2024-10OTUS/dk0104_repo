@@ -6,12 +6,12 @@ metadata:
   labels:
      app: {{ .Values.deployment.name }}
 spec:
-  replicas: {{.Values.deployment.spec.replicas}}
+  replicas: {{.Values.replicaCount  }}
   selector:
     matchLabels:
       app: {{ .Values.deployment.name}}
   strategy:
-    type: {{ .Values.deployment.spec.strategy.type }}
+    type: {{ .Values.deployment.strategy.type }}
     rollingUpdate:
       maxUnavailable: {{ .Values.deployment.spec.strategy }}
   template:

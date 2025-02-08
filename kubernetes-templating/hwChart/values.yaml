@@ -1,21 +1,38 @@
 # Default values for hwChart.
-
+namespace: homework
 ##########################################
 # Deployment
 ##########################################
 replicaCount: 1
 
-image:
-  name: joseluisq/static-web-server:2
-  repository: nginx
-  tag: 2
-  imagePullPolicy: IfNotPresent
-enableReadinessProbe: true
+deploment:
+  name: static-web-server
+  serviceAccountName:
+  configMapPath:
+  strategy:
+    type:
+    maxUntavailable:
+  serverSettings:
+    root:
+    port:
+    configFile:
+  image:
+    name: joseluisq/static-web-server:2
+    repository: nginx
+    tag: 2
+    imagePullPolicy: IfNotPresent
+  volumes:
+    defaultConfigMapName:
+    nginxConfigMapName:
 
 ##########################################
 # Service
 ##########################################
 service:
-  type: ClusterIP
-  port: 80
-  portName: webserver
+  name:
+  port:
+  targetPort:
+  appSelector:
+##########################################
+# pvc
+##########################################
