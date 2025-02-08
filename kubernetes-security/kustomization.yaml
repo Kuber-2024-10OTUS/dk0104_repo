@@ -1,18 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - admin-role.yaml
-  - cd-admin-role-binding.yaml
-  - cd-service-account.yaml
   - cm.yaml
   - deployment.yaml
   - ingress.yaml
-  - monitoring-cluster-role-binding.yaml
-  - monitoring-clusterrole.yaml
-  - monitoring-service-account.yaml
   - namespace.yaml
   - pv.yaml
   - pvc.yaml
   - service.yaml
-  - storage.yaml
+  - storageClass.yaml
+  - cd-roles-bindings.yaml
   - monitoring-roles-bindings.yaml
