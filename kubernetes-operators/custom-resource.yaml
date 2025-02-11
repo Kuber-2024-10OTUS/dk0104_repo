@@ -1,0 +1,11 @@
+apiVersion: otus.homework/v1
+kind: MySQL
+metadata:
+  name: custom-db-resource
+  namespace: default
+  finalizers: []
+spec:
+  image: "mysql:8.0.32-bookworm"
+  database: "ctrl_db"
+  password: "otus"
+  storageSize: "500Mi"
