@@ -1,0 +1,10 @@
+# Suffix aliases
+alias -s md=nvim
+alias -s txt=nvim
+alias -s yaml=nvim
+alias -s html='xdg-open'
+
+# Other
+alias lg='lazygit'
+alias die="shutdown now"
+alias v='nvim'

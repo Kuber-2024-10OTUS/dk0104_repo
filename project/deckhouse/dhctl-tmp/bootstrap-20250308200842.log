@@ -1,0 +1,97 @@
+2025-03-08 20:08:42 - Debug log file: /tmp/dhctl/bootstrap-20250308200842.log
+2025-03-08 20:08:42 - teardown callback 'Finalize logger' added, callbacks in queue: 6
+2025-03-08 20:08:42 - Have config file /config.yml
+2025-03-08 20:08:42 - Openapi spec not found for module registrypackages
+2025-03-08 20:08:42 - Found ClusterConfiguration
+2025-03-08 20:08:42 - Found ModuleConfig in config file deckhouse
+2025-03-08 20:08:42 - Found ModuleConfig in config file global
+2025-03-08 20:08:42 - Found ModuleConfig in config file user-authn
+2025-03-08 20:08:42 - 
+2025-03-08 20:08:42 - Config document validation failed: Document validation failed:
+---
+# Cloud provider settings.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/cloud-provider-yandex/cluster_configuration.html
+apiVersion: deckhouse.io/v1
+kind: YandexClusterConfiguration
+layout: Standard
+# Yandex Cloud account parameters.
+provider:
+  # The cloud ID.
+  cloudID: b1gt04hr68nbbe1p4s86
+  # The folder ID.
+  folderID: b1gekkfqv8u5qbjmnk5n
+  serviceAccountJSON: 
+     {
+        "id": "aje250jiu3fn4slh9slu",
+        "service_account_id": "ajepl3kvotlvit7bn5li",
+        "created_at": "2025-03-08T19:27:55.650750622Z",
+        "key_algorithm": "RSA_2048",
+        "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsifK8NXGMxRsJSUno6FK\ne98NxXs3q2QO3pPQ9bLak9bHmq/CYetGg/TKofCgSLopVfRV4hbHD5kAs9yQiIuo\nz+k+Ep0Z/ydPWPiX2sCS8OeOUALSeKBeAhGLplLF1eFfz269fOT4UI/0haTK/Ri6\ndoXlBUwRqPGn8aPyNQBuyy/GNEQnKNeizyHWTeujwF0kHeaVdOjYbMGe58R/7Ie6\nkoRKbpOQQtoxzWT17lnu2yHant0tHU5awircVmrOBIzInzsi2RHRrjXqX8OnPB4I\nmvtoRrl88Td1Cdd/H0PO56iUPTafOWZatObus9nnsEeIaSWLsfF0RhAtiwkEupnk\nQwIDAQAB\n-----END PUBLIC KEY-----\n",
+        "private_key": "PLEASE DO NOT REMOVE THIS LINE! Yandex.Cloud SA Key ID \u003caje250jiu3fn4slh9slu\u003e\n-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCyJ8rw1cYzFGwl\nJSejoUp73w3FezerZA7ek9D1stqT1sear8Jh60aD9Mqh8KBIuilV9FXiFscPmQCz\n3JCIi6jP6T4SnRn/J09Y+JfawJLw545QAtJ4oF4CEYumUsXV4V/Pbr185PhQj/SF\npMr9GLp2heUFTBGo8afxo/I1AG7LL8Y0RCco16LPIdZN66PAXSQd5pV06NhswZ7n\nxH/sh7qShEpuk5BC2jHNZPXuWe7bIdqe3S0dTlrCKtxWas4EjMifOyLZEdGuNepf\nw6c8Hgia+2hGuXzxN3UJ138fQ87nqJQ9Np85Zlq05u6z2eewR4hpJYux8XRGEC2L\nCQS6meRDAgMBAAECggEAHSUwaKT4Z0vcg1koOnc9CbXMeXW2fkYAvr387e0kIBJ/\nlhlR2hYU86p86fBFMJCwCX1O/Y1PZIhZ2pLnXEdIxza3rnDgG2NxcjM9GI7vmxSu\nrf1ANHa72mfHal7ZOavEsllCC6gjzX43eROkF7LPcmtmM68lpndeS8RP8AbRmVDC\nCQRnYdo94VxUw/UI+E9d+dPkvD05+06MRY6+4RlU8pDKX2O2dikg5+rI8tsHY+sc\neaIvQzkwa9P9cZmtmtr5TXri1NJW+HHjApLeqlEhfnFcP25Pp34HADLLNMEDtSL4\np2HZyna0eiWw2HBsgxL/oNwI70KB/MJDxQbAby36uQKBgQDhSGtaNa9sUy9IQOB+\ncjAuytH8Tb/N5jMwJHSvQognQlPXgWl2CRRn9NHtiZOIFZTpGJ6NPpwYlHsaV+7f\nGv04LLUjvW71CfnFBJ/DzCgScUvjuIZNk2nb+qFRzwFIrAIBK8UKdan4MuOx8Nwl\npidV19Lu92n+sHdE8XrXnVh5SQKBgQDKcl9vVTreClWeXTpmiq85zMMXe/9DOKsG\nGC7dsVwD34G9kwmoJKapsbWlZStleLzFqv/2C40HyUXbDRUHgU+Rxg2yCgXKUiX6\nGnKYFpTGEoEYiizbA0SmadGbuIbNYjVLOZfaKxOlSL0xj2XjSebT3KbL4RGC/zx3\nlPJRgT5dKwKBgDAu7g8IRnHTxNweTCWfRKDtbkYZVvmxz6bvVSmbAEXtUMNaAXVm\ncb/eQ/wbHbvQad4FDvxEtNwo/b9fqU58lkYqgb+YJ6AvNwWlfIpDIxr2snWNJOR4\nr/6Ft3Uo4ixp5a/cbbNUATt9nueTDXLb+7PHimzj6/62PXw4bb6p/59JAoGAFD1K\n/T5wHDK8TJDVfdrvmb+24WosIvRPZNSWGuPYZyq5NdK1bHH9l4mEt3xd0k830CtA\nW8Db4KNmsHemWpG6+r/qLpqB6bA8y7xJKJtZVFQVQ/bMdTjmbBy4L/FKyM3AtjyT\nyeP0mtmi0ImdjhOdWCD/K/LcZVRPH0Vs1GkvavECgYA2HWF6+EGW07Xw5MFziIQV\nf4L5C/1XRqDHkL4YK0eukGaQjYn9gxjMhuS+6r6Rj9uruVhh5qhx3QBD2evLT2Xp\nYQcmXBZDWIxLWLkUx4ORu+R/xQDCrtizXgnKr0Q8gLgqgNfLQCfaENCBCnNLVZyT\nBqwGo4Ih3qlJjduGz7xkFg==\n-----END PRIVATE KEY-----\n"
+     }
+
+masterNodeGroup:
+  replicas: 1
+  instanceClass:
+    cores: 4
+    memory: 8192
+    # Yandex Cloud image ID. It is recommended to use the most fresh Ubuntu 22.04 LTS image.
+    # To get one you can use this one-liner:
+    # yc compute image list --folder-id standard-images --format json | jq -r '[.[] | select(.family == "ubuntu-2204-lts")] | sort_by(.created_at)[-1].id'
+    # You might consider changing this.
+    imageID: fd864gbboths76r8gm5f
+    externalIPAddresses:
+    - "Auto"
+# This subnet will be split into three equal parts; they will serve as a basis for subnets in three Yandex Cloud zones.
+nodeNetworkCIDR: "10.241.32.0/20"
+# Public SSH key for accessing cloud nodes.
+# This key will be added to the user on created nodes (the user name depends on the image used).
+sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDBQqieqEKuhV5kDZn5SlsR6pVkMmQcJmM8TYScKi+j7brhGStzZowo2Cgj5FXHT+a2FgrTbSrqstEOd6ot6O41ccYCu7QoZtS35MeEjcqmpUI2HUUZI3ykWgtMkr/xk9MN8E+X0YjMrfgLk5uI7/b2KmPQOvxZ4WDFWKbn41zYgLowdAg0sECifvkKtzvnfUln7vUzO0wRTCXDkeX63VmyQe2hNjysizzzK1A1dORbS6HmqZKoGcH6KQwtbOS5NalkIg4tDyrx6SnWLIpiHCazwWBTBxr380r3c3FN21MmA1mCR+wlgXz5NoLPoojXOR9jvHHEuW7cLrORUfd+PLtszbZZARBlOc7yOsuIoEwbbX+RAmDMPWFjSipLlnbr/ao8f8s7hz6seTfnXD62sOtGiPKs12FzVcvGjfTsOFQJxXrYj8LjFW2iySkXNaWguCtCkNyPWAvOYpL7FZbPa05SiC3/hkoRTmVK7qgxvO8KhD7VTJ9NU61ACTIPPqYLJTwHj8dO7EIrvS9rYiixxmLTemPffYSeXmED67yuGbmnTveNFoyzUDYIoy6hlQtSuDEv3YUqdXusucQzZQ2Xf7VvVx6QMPaPzDzWwZzYZW6rWgQ4khQ6pHS0D2yeG1YnkIfJ1HGOGHh16pPKjChrFOof3DLWjcTj/TV9+jRZZ22yEw== deniskeksel@Deniss-MacBook-Pro.local
+
+1 error occurred:
+	* provider.serviceAccountJSON must be of type string: "object"
+
+
+data: 
+1	# Cloud provider settings.
+2	# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/cloud-provider-yandex/cluster_configuration.html
+3	apiVersion: deckhouse.io/v1
+4	kind: YandexClusterConfiguration
+5	layout: Standard
+6	# Yandex Cloud account parameters.
+7	provider:
+8	  # The cloud ID.
+9	  cloudID: b1gt04hr68nbbe1p4s86
+10	  # The folder ID.
+11	  folderID: b1gekkfqv8u5qbjmnk5n
+12	  serviceAccountJSON: 
+13	     {
+14	        "id": "aje250jiu3fn4slh9slu",
+15	        "service_account_id": "ajepl3kvotlvit7bn5li",
+16	        "created_at": "2025-03-08T19:27:55.650750622Z",
+17	        "key_algorithm": "RSA_2048",
+18	        "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsifK8NXGMxRsJSUno6FK\ne98NxXs3q2QO3pPQ9bLak9bHmq/CYetGg/TKofCgSLopVfRV4hbHD5kAs9yQiIuo\nz+k+Ep0Z/ydPWPiX2sCS8OeOUALSeKBeAhGLplLF1eFfz269fOT4UI/0haTK/Ri6\ndoXlBUwRqPGn8aPyNQBuyy/GNEQnKNeizyHWTeujwF0kHeaVdOjYbMGe58R/7Ie6\nkoRKbpOQQtoxzWT17lnu2yHant0tHU5awircVmrOBIzInzsi2RHRrjXqX8OnPB4I\nmvtoRrl88Td1Cdd/H0PO56iUPTafOWZatObus9nnsEeIaSWLsfF0RhAtiwkEupnk\nQwIDAQAB\n-----END PUBLIC KEY-----\n",
+19	        "private_key": "PLEASE DO NOT REMOVE THIS LINE! Yandex.Cloud SA Key ID \u003caje250jiu3fn4slh9slu\u003e\n-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCyJ8rw1cYzFGwl\nJSejoUp73w3FezerZA7ek9D1stqT1sear8Jh60aD9Mqh8KBIuilV9FXiFscPmQCz\n3JCIi6jP6T4SnRn/J09Y+JfawJLw545QAtJ4oF4CEYumUsXV4V/Pbr185PhQj/SF\npMr9GLp2heUFTBGo8afxo/I1AG7LL8Y0RCco16LPIdZN66PAXSQd5pV06NhswZ7n\nxH/sh7qShEpuk5BC2jHNZPXuWe7bIdqe3S0dTlrCKtxWas4EjMifOyLZEdGuNepf\nw6c8Hgia+2hGuXzxN3UJ138fQ87nqJQ9Np85Zlq05u6z2eewR4hpJYux8XRGEC2L\nCQS6meRDAgMBAAECggEAHSUwaKT4Z0vcg1koOnc9CbXMeXW2fkYAvr387e0kIBJ/\nlhlR2hYU86p86fBFMJCwCX1O/Y1PZIhZ2pLnXEdIxza3rnDgG2NxcjM9GI7vmxSu\nrf1ANHa72mfHal7ZOavEsllCC6gjzX43eROkF7LPcmtmM68lpndeS8RP8AbRmVDC\nCQRnYdo94VxUw/UI+E9d+dPkvD05+06MRY6+4RlU8pDKX2O2dikg5+rI8tsHY+sc\neaIvQzkwa9P9cZmtmtr5TXri1NJW+HHjApLeqlEhfnFcP25Pp34HADLLNMEDtSL4\np2HZyna0eiWw2HBsgxL/oNwI70KB/MJDxQbAby36uQKBgQDhSGtaNa9sUy9IQOB+\ncjAuytH8Tb/N5jMwJHSvQognQlPXgWl2CRRn9NHtiZOIFZTpGJ6NPpwYlHsaV+7f\nGv04LLUjvW71CfnFBJ/DzCgScUvjuIZNk2nb+qFRzwFIrAIBK8UKdan4MuOx8Nwl\npidV19Lu92n+sHdE8XrXnVh5SQKBgQDKcl9vVTreClWeXTpmiq85zMMXe/9DOKsG\nGC7dsVwD34G9kwmoJKapsbWlZStleLzFqv/2C40HyUXbDRUHgU+Rxg2yCgXKUiX6\nGnKYFpTGEoEYiizbA0SmadGbuIbNYjVLOZfaKxOlSL0xj2XjSebT3KbL4RGC/zx3\nlPJRgT5dKwKBgDAu7g8IRnHTxNweTCWfRKDtbkYZVvmxz6bvVSmbAEXtUMNaAXVm\ncb/eQ/wbHbvQad4FDvxEtNwo/b9fqU58lkYqgb+YJ6AvNwWlfIpDIxr2snWNJOR4\nr/6Ft3Uo4ixp5a/cbbNUATt9nueTDXLb+7PHimzj6/62PXw4bb6p/59JAoGAFD1K\n/T5wHDK8TJDVfdrvmb+24WosIvRPZNSWGuPYZyq5NdK1bHH9l4mEt3xd0k830CtA\nW8Db4KNmsHemWpG6+r/qLpqB6bA8y7xJKJtZVFQVQ/bMdTjmbBy4L/FKyM3AtjyT\nyeP0mtmi0ImdjhOdWCD/K/LcZVRPH0Vs1GkvavECgYA2HWF6+EGW07Xw5MFziIQV\nf4L5C/1XRqDHkL4YK0eukGaQjYn9gxjMhuS+6r6Rj9uruVhh5qhx3QBD2evLT2Xp\nYQcmXBZDWIxLWLkUx4ORu+R/xQDCrtizXgnKr0Q8gLgqgNfLQCfaENCBCnNLVZyT\nBqwGo4Ih3qlJjduGz7xkFg==\n-----END PRIVATE KEY-----\n"
+20	     }
+21	
+22	masterNodeGroup:
+23	  replicas: 1
+24	  instanceClass:
+25	    cores: 4
+26	    memory: 8192
+27	    # Yandex Cloud image ID. It is recommended to use the most fresh Ubuntu 22.04 LTS image.
+28	    # To get one you can use this one-liner:
+29	    # yc compute image list --folder-id standard-images --format json | jq -r '[.[] | select(.family == "ubuntu-2204-lts")] | sort_by(.created_at)[-1].id'
+30	    # You might consider changing this.
+31	    imageID: fd864gbboths76r8gm5f
+32	    externalIPAddresses:
+33	    - "Auto"
+34	# This subnet will be split into three equal parts; they will serve as a basis for subnets in three Yandex Cloud zones.
+35	nodeNetworkCIDR: "10.241.32.0/20"
+36	# Public SSH key for accessing cloud nodes.
+37	# This key will be added to the user on created nodes (the user name depends on the image used).
+38	sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDBQqieqEKuhV5kDZn5SlsR6pVkMmQcJmM8TYScKi+j7brhGStzZowo2Cgj5FXHT+a2FgrTbSrqstEOd6ot6O41ccYCu7QoZtS35MeEjcqmpUI2HUUZI3ykWgtMkr/xk9MN8E+X0YjMrfgLk5uI7/b2KmPQOvxZ4WDFWKbn41zYgLowdAg0sECifvkKtzvnfUln7vUzO0wRTCXDkeX63VmyQe2hNjysizzzK1A1dORbS6HmqZKoGcH6KQwtbOS5NalkIg4tDyrx6SnWLIpiHCazwWBTBxr380r3c3FN21MmA1mCR+wlgXz5NoLPoojXOR9jvHHEuW7cLrORUfd+PLtszbZZARBlOc7yOsuIoEwbbX+RAmDMPWFjSipLlnbr/ao8f8s7hz6seTfnXD62sOtGiPKs12FzVcvGjfTsOFQJxXrYj8LjFW2iySkXNaWguCtCkNyPWAvOYpL7FZbPa05SiC3/hkoRTmVK7qgxvO8KhD7VTJ9NU61ACTIPPqYLJTwHj8dO7EIrvS9rYiixxmLTemPffYSeXmED67yuGbmnTveNFoyzUDYIoy6hlQtSuDEv3YUqdXusucQzZQ2Xf7VvVx6QMPaPzDzWwZzYZW6rWgQ4khQ6pHS0D2yeG1YnkIfJ1HGOGHh16pPKjChrFOof3DLWjcTj/TV9+jRZZ22yEw== deniskeksel@Deniss-MacBook-Pro.local
+
+
+2025-03-08 20:08:42 - teardown started, queue length: 6
+2025-03-08 20:08:42 - teardown callback 5: 'Finalize logger' started

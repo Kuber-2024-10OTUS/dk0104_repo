@@ -1,0 +1,187 @@
+# General cluster parameters.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/installing/configuration.html#clusterconfiguration
+apiVersion: deckhouse.io/v1
+kind: ClusterConfiguration
+clusterType: Cloud
+cloud:
+  provider: Yandex
+  prefix: cloud-demo
+# Address space of the cluster's Pods.
+podSubnetCIDR: 10.111.0.0/16
+# Address space of the cluster's services.
+serviceSubnetCIDR: 10.222.0.0/16
+kubernetesVersion: "Automatic"
+clusterDomain: "cluster.local"
+---
+# Deckhouse module settings.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/deckhouse/configuration.html
+apiVersion: deckhouse.io/v1alpha1
+kind: ModuleConfig
+metadata:
+  name: deckhouse
+spec:
+  version: 1
+  enabled: true
+  settings:
+    bundle: Default
+    # Deckhouse release channel. The Early Access channel is stable enough to be used in productive environments.
+    # If you plan to use several clusters, it is recommended to use different release channels on them.
+    # More info: https://deckhouse.io/products/kubernetes-platform/documentation/v1/deckhouse-release-channels.html
+    releaseChannel: EarlyAccess
+    logLevel: Info
+---
+# Global Deckhouse settings.
+# https://deckhouse.ru/products/kubernetes-platform/documentation/v1/deckhouse-configure-global.html#parameters
+apiVersion: deckhouse.io/v1alpha1
+kind: ModuleConfig
+metadata:
+  name: global
+spec:
+  version: 2
+  settings:
+    modules:
+      # Template that will be used for system apps domains within the cluster.
+      # E.g., Grafana for %s.example.com will be available as 'grafana.example.com'.
+      # The domain MUST NOT match the one specified in the clusterDomain parameter of the ClusterConfiguration resource.
+      # You can change it to your own or follow the steps in the guide and change it after installation.
+      publicDomainTemplate: "%s.example.com"
+---
+# user-authn module settings.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/user-authn/configuration.html
+apiVersion: deckhouse.io/v1alpha1
+kind: ModuleConfig
+metadata:
+  name: user-authn
+spec:
+  version: 2
+  enabled: true
+  settings:
+    controlPlaneConfigurator:
+      dexCAMode: DoNotNeed
+    # Enabling access to the API server through Ingress.
+    # https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/user-authn/configuration.html#parameters-publishapi
+    publishAPI:
+      enabled: true
+      https:
+        mode: Global
+        global:
+          kubeconfigGeneratorMasterCA: ""
+---
+# Cloud provider settings.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/cloud-provider-yandex/cluster_configuration.html
+apiVersion: deckhouse.io/v1
+kind: YandexClusterConfiguration
+layout: Standard
+# Yandex Cloud account parameters.
+provider:
+  # The cloud ID.
+  cloudID: b1gt04hr68nbbe1p4s86
+  # The folder ID.
+  folderID: b1gekkfqv8u5qbjmnk5n
+  serviceAccountJSON: | 
+     {
+        "id": "aje250jiu3fn4slh9slu",
+        "service_account_id": "ajepl3kvotlvit7bn5li",
+        "created_at": "2025-03-08T19:27:55.650750622Z",
+        "key_algorithm": "RSA_2048",
+        "public_key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsifK8NXGMxRsJSUno6FK\ne98NxXs3q2QO3pPQ9bLak9bHmq/CYetGg/TKofCgSLopVfRV4hbHD5kAs9yQiIuo\nz+k+Ep0Z/ydPWPiX2sCS8OeOUALSeKBeAhGLplLF1eFfz269fOT4UI/0haTK/Ri6\ndoXlBUwRqPGn8aPyNQBuyy/GNEQnKNeizyHWTeujwF0kHeaVdOjYbMGe58R/7Ie6\nkoRKbpOQQtoxzWT17lnu2yHant0tHU5awircVmrOBIzInzsi2RHRrjXqX8OnPB4I\nmvtoRrl88Td1Cdd/H0PO56iUPTafOWZatObus9nnsEeIaSWLsfF0RhAtiwkEupnk\nQwIDAQAB\n-----END PUBLIC KEY-----\n",
+        "private_key": "PLEASE DO NOT REMOVE THIS LINE! Yandex.Cloud SA Key ID \u003caje250jiu3fn4slh9slu\u003e\n-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCyJ8rw1cYzFGwl\nJSejoUp73w3FezerZA7ek9D1stqT1sear8Jh60aD9Mqh8KBIuilV9FXiFscPmQCz\n3JCIi6jP6T4SnRn/J09Y+JfawJLw545QAtJ4oF4CEYumUsXV4V/Pbr185PhQj/SF\npMr9GLp2heUFTBGo8afxo/I1AG7LL8Y0RCco16LPIdZN66PAXSQd5pV06NhswZ7n\nxH/sh7qShEpuk5BC2jHNZPXuWe7bIdqe3S0dTlrCKtxWas4EjMifOyLZEdGuNepf\nw6c8Hgia+2hGuXzxN3UJ138fQ87nqJQ9Np85Zlq05u6z2eewR4hpJYux8XRGEC2L\nCQS6meRDAgMBAAECggEAHSUwaKT4Z0vcg1koOnc9CbXMeXW2fkYAvr387e0kIBJ/\nlhlR2hYU86p86fBFMJCwCX1O/Y1PZIhZ2pLnXEdIxza3rnDgG2NxcjM9GI7vmxSu\nrf1ANHa72mfHal7ZOavEsllCC6gjzX43eROkF7LPcmtmM68lpndeS8RP8AbRmVDC\nCQRnYdo94VxUw/UI+E9d+dPkvD05+06MRY6+4RlU8pDKX2O2dikg5+rI8tsHY+sc\neaIvQzkwa9P9cZmtmtr5TXri1NJW+HHjApLeqlEhfnFcP25Pp34HADLLNMEDtSL4\np2HZyna0eiWw2HBsgxL/oNwI70KB/MJDxQbAby36uQKBgQDhSGtaNa9sUy9IQOB+\ncjAuytH8Tb/N5jMwJHSvQognQlPXgWl2CRRn9NHtiZOIFZTpGJ6NPpwYlHsaV+7f\nGv04LLUjvW71CfnFBJ/DzCgScUvjuIZNk2nb+qFRzwFIrAIBK8UKdan4MuOx8Nwl\npidV19Lu92n+sHdE8XrXnVh5SQKBgQDKcl9vVTreClWeXTpmiq85zMMXe/9DOKsG\nGC7dsVwD34G9kwmoJKapsbWlZStleLzFqv/2C40HyUXbDRUHgU+Rxg2yCgXKUiX6\nGnKYFpTGEoEYiizbA0SmadGbuIbNYjVLOZfaKxOlSL0xj2XjSebT3KbL4RGC/zx3\nlPJRgT5dKwKBgDAu7g8IRnHTxNweTCWfRKDtbkYZVvmxz6bvVSmbAEXtUMNaAXVm\ncb/eQ/wbHbvQad4FDvxEtNwo/b9fqU58lkYqgb+YJ6AvNwWlfIpDIxr2snWNJOR4\nr/6Ft3Uo4ixp5a/cbbNUATt9nueTDXLb+7PHimzj6/62PXw4bb6p/59JAoGAFD1K\n/T5wHDK8TJDVfdrvmb+24WosIvRPZNSWGuPYZyq5NdK1bHH9l4mEt3xd0k830CtA\nW8Db4KNmsHemWpG6+r/qLpqB6bA8y7xJKJtZVFQVQ/bMdTjmbBy4L/FKyM3AtjyT\nyeP0mtmi0ImdjhOdWCD/K/LcZVRPH0Vs1GkvavECgYA2HWF6+EGW07Xw5MFziIQV\nf4L5C/1XRqDHkL4YK0eukGaQjYn9gxjMhuS+6r6Rj9uruVhh5qhx3QBD2evLT2Xp\nYQcmXBZDWIxLWLkUx4ORu+R/xQDCrtizXgnKr0Q8gLgqgNfLQCfaENCBCnNLVZyT\nBqwGo4Ih3qlJjduGz7xkFg==\n-----END PRIVATE KEY-----\n"
+     }
+
+masterNodeGroup:
+  replicas: 1
+  instanceClass:
+    cores: 4
+    memory: 8192
+    # Yandex Cloud image ID. It is recommended to use the most fresh Ubuntu 22.04 LTS image.
+    # To get one you can use this one-liner:
+    # yc compute image list --folder-id standard-images --format json | jq -r '[.[] | select(.family == "ubuntu-2204-lts")] | sort_by(.created_at)[-1].id'
+    # You might consider changing this.
+    imageID: fd864gbboths76r8gm5f
+    externalIPAddresses:
+    - "Auto"
+# This subnet will be split into three equal parts; they will serve as a basis for subnets in three Yandex Cloud zones.
+nodeNetworkCIDR: "10.241.32.0/20"
+# Public SSH key for accessing cloud nodes.
+# This key will be added to the user on created nodes (the user name depends on the image used).
+sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDBQqieqEKuhV5kDZn5SlsR6pVkMmQcJmM8TYScKi+j7brhGStzZowo2Cgj5FXHT+a2FgrTbSrqstEOd6ot6O41ccYCu7QoZtS35MeEjcqmpUI2HUUZI3ykWgtMkr/xk9MN8E+X0YjMrfgLk5uI7/b2KmPQOvxZ4WDFWKbn41zYgLowdAg0sECifvkKtzvnfUln7vUzO0wRTCXDkeX63VmyQe2hNjysizzzK1A1dORbS6HmqZKoGcH6KQwtbOS5NalkIg4tDyrx6SnWLIpiHCazwWBTBxr380r3c3FN21MmA1mCR+wlgXz5NoLPoojXOR9jvHHEuW7cLrORUfd+PLtszbZZARBlOc7yOsuIoEwbbX+RAmDMPWFjSipLlnbr/ao8f8s7hz6seTfnXD62sOtGiPKs12FzVcvGjfTsOFQJxXrYj8LjFW2iySkXNaWguCtCkNyPWAvOYpL7FZbPa05SiC3/hkoRTmVK7qgxvO8KhD7VTJ9NU61ACTIPPqYLJTwHj8dO7EIrvS9rYiixxmLTemPffYSeXmED67yuGbmnTveNFoyzUDYIoy6hlQtSuDEv3YUqdXusucQzZQ2Xf7VvVx6QMPaPzDzWwZzYZW6rWgQ4khQ6pHS0D2yeG1YnkIfJ1HGOGHh16pPKjChrFOof3DLWjcTj/TV9+jRZZ22yEw== deniskeksel@Deniss-MacBook-Pro.local
+---
+# Section containing the parameters of instance class for worker nodes.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/cloud-provider-yandex/cr.html
+apiVersion: deckhouse.io/v1
+kind: YandexInstanceClass
+metadata:
+  name: worker
+spec:
+  # You might consider changing this.
+  cores: 4
+  # You might consider changing this.
+  memory: 8192
+  # You might consider changing this.
+  diskSizeGB: 30
+---
+# Section containing the parameters of worker node group.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/node-manager/cr.html#nodegroup
+apiVersion: deckhouse.io/v1
+kind: NodeGroup
+metadata:
+  name: worker
+spec:
+  cloudInstances:
+    classReference:
+      kind: YandexInstanceClass
+      name: worker
+    # The maximum number of instances for the group in each zone (used by the autoscaler).
+    # You might consider changing this.
+    maxPerZone: 1
+    # The minimum number of instances for the group in each zone.
+    minPerZone: 1
+    # List of availability zones to create instances in.
+    # You might consider changing this.
+    zones:
+    - ru-central1-a
+  disruptions:
+    approvalMode: Automatic
+  nodeType: CloudEphemeral
+---
+# Section containing the parameters of NGINX Ingress controller.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/ingress-nginx/cr.html
+apiVersion: deckhouse.io/v1
+kind: IngressNginxController
+metadata:
+  name: nginx
+spec:
+  ingressClass: nginx
+  inlet: LoadBalancer
+  # Describes on which nodes the Ingress Controller will be located. Label node.deckhouse.io/group: <NAME_GROUP_NAME> is set automatically.
+  nodeSelector:
+    node.deckhouse.io/group: worker
+---
+# RBAC and authorization settings.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/user-authz/cr.html#clusterauthorizationrule
+apiVersion: deckhouse.io/v1
+kind: ClusterAuthorizationRule
+metadata:
+  name: admin
+spec:
+  subjects:
+  - kind: User
+    name: admin@deckhouse.io
+  accessLevel: SuperAdmin
+  portForwarding: true
+---
+# Parameters of the static user.
+# https://deckhouse.io/products/kubernetes-platform/documentation/v1/modules/user-authn/cr.html#user
+apiVersion: deckhouse.io/v1
+kind: User
+metadata:
+  name: admin
+spec:
+  # User e-mail.
+  email: admin@deckhouse.io
+  # This is a hash of the password gr6gq7hs87, generated when loading the page of the Getting Started.
+  # Generate your own or use it at your own risk (for testing purposes)
+  # echo "gr6gq7hs87" | htpasswd -BinC 10 "" | cut -d: -f2 | base64 -w0
+  # You might consider changing this.
+  password: 'JDJhJDEwJGNWUnZKbnRnT1FFWnFVV0FaQ01UOS5YT1N2Q3RTRGF5SnJhWjU2WTB1dS5sNHlWWC5QWGQy'
+
