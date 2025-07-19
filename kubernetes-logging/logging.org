@@ -1,0 +1,19 @@
+#+title: Logging
+
+* Klaster einstellungen
+#+begin_src sh :results output
+kubectl get node -o wide --show-labels
+#+end_src
+
+#+RESULTS:
+: NAME                        STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP       OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME     LABELS
+: cl1gj1h7njc4tv9kvj2l-adip   Ready    <none>   21d   v1.29.1   172.16.0.31   158.160.147.193   Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.25   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=standard-v3,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=ru-central1-d,kubernetes.io/arch=amd64,kubernetes.io/hostname=cl1gj1h7njc4tv9kvj2l-adip,kubernetes.io/os=linux,node.kubernetes.io/instance-type=standard-v3,node.kubernetes.io/kube-proxy-ds-ready=true,node.kubernetes.io/masq-agent-ds-ready=true,node.kubernetes.io/node-problem-detector-ds-ready=true,topology.kubernetes.io/zone=ru-central1-d,yandex.cloud/node-group-id=catsncnuoktlpha2lue1,yandex.cloud/pci-topology=k8s,yandex.cloud/preemptible=false
+: cl1gj1h7njc4tv9kvj2l-ukul   Ready    <none>   21d   v1.29.1   172.16.0.7    51.250.33.84      Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.25   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=standard-v3,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=ru-central1-d,kubernetes.io/arch=amd64,kubernetes.io/hostname=cl1gj1h7njc4tv9kvj2l-ukul,kubernetes.io/os=linux,node.kubernetes.io/instance-type=standard-v3,node.kubernetes.io/kube-proxy-ds-ready=true,node.kubernetes.io/masq-agent-ds-ready=true,node.kubernetes.io/node-problem-detector-ds-ready=true,topology.kubernetes.io/zone=ru-central1-d,yandex.cloud/node-group-id=catsncnuoktlpha2lue1,yandex.cloud/pci-topology=k8s,yandex.cloud/preemptible=false
+
+* Loki Installation
+** Originales helmchart
+
+** S3
+*** Yandex Object Storage
+[[https://yandex.cloud/ru/docs/storage/][Yandex cloud storage]] Beschreibung der yandex webseite .
+- Erster schritt [[https://yandex.cloud/ru/docs/storage/security/][rollen ]]und rechte zuweisen
