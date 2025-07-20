@@ -1,0 +1,4 @@
+{{- if .Values.ingress.enabled }}
+Application UI is available at:
+http://{{.Values.ingress.host }}/
+{{- end }}

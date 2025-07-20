@@ -1,0 +1,35 @@
+replicaCount: 3
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: "1.27.3"
+
+
+serviceAccount:
+  create: true
+
+roleBinding:
+  create: true
+
+initContainer:
+  name: init-alpine-curl
+  image: alpine/curl
+  tag: "8.10.0"
+
+service:
+  port: 8080
+
+readinessProbe:
+  enabled: true
+
+ingress:
+  enabled: true
+  host: homework.otus
+
+mysql:
+  enabled: true
+  rootPassword: otus2025
+
+persistentVolume:
+  storageClass: kubia-storageclass
+  size: 1Gi
