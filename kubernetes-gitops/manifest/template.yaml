@@ -1,0 +1,13 @@
+project: otus
+source:
+  repoURL: 'https://github.com/Kuber-2024-10OTUS/dk0104_repo.git'
+  path: kubernetes-templating/nginx-app
+  targetRevision: kubernetes-templating
+  helm:
+    valueFiles:
+      - values.yaml
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: homework-helm
+syncPolicy:
+  automated: {}

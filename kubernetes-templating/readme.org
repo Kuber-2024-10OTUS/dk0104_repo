@@ -1,1 +1,16 @@
-#+title: Readme
+#+title:  HA6 Kubernetes Templating
+* Installation und Vorbereitung
+- helm cli installieren
+- helmfile installieren
+* Aufgabe 1 Helmchart erstellen
+** Eigenen helm chart erstellen
+[[id:https://helm.sh/docs/helm/helm_create/][Helm create dokumentation]]
+
+#+begin_src shell
+helm create nginx-app
+#+end_src
+
+- Entsprechend der [[https://helm.sh/docs/chart_template_guide/getting_started/][dokumentation]] eien helm chart fuer forherige app erstellen
+ToDo: Etwas mehr ueber templates in Erfahrung bringen.
+* Helmfile benutzen
+- [[https://helm.sh/docs/chart_template_guide/getting_started/][Helmfile]] getting strarted

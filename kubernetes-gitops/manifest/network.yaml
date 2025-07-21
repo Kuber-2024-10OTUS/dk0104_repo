@@ -1,0 +1,10 @@
+project: otus
+source:
+  repoURL: 'https://github.com/Kuber-2024-10OTUS/dk0104_repo.git'
+  path: kubernetes-networks
+  targetRevision: kubernetes-networks
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: homework
+syncPolicy:
+  automated: {}

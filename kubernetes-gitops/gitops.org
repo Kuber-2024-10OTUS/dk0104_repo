@@ -1,0 +1,80 @@
+#+title: Kubernetes Gitops
+
+* Kubernetes gitops installation
+** Kluster Einstellungen
+- Managed kluster installieren und 2 Knoten Setzen
+  Auf einen knoten Einschraenkungen sentzen damit es als Infra knoten verwendet wird
+
+  #+begin_src shell
+   kubectl label nodes cl1gj1h7njc4tv9kvj2l-adip node-role=infra
+   kubectl taint nodes cl1gj1h7njc4tv9kvj2l-adip node-role=infra:NoSchedule
+  #+end_src
+
+  #+begin_src shell :results output
+   kubectl get node -o wide --show-labels
+  #+end_src
+
+  #+RESULTS:
+  : NAME                        STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP       OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME     LABELS
+  : cl1gj1h7njc4tv9kvj2l-adip   Ready    <none>   28d   v1.29.1   172.16.0.31   158.160.168.212   Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.25   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=standard-v3,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=ru-central1-d,kubernetes.io/arch=amd64,kubernetes.io/hostname=cl1gj1h7njc4tv9kvj2l-adip,kubernetes.io/os=linux,node-role=infra,node.kubernetes.io/instance-type=standard-v3,node.kubernetes.io/kube-proxy-ds-ready=true,node.kubernetes.io/masq-agent-ds-ready=true,node.kubernetes.io/node-problem-detector-ds-ready=true,topology.kubernetes.io/zone=ru-central1-d,yandex.cloud/node-group-id=catsncnuoktlpha2lue1,yandex.cloud/pci-topology=k8s,yandex.cloud/preemptible=false
+  : cl1gj1h7njc4tv9kvj2l-ukul   Ready    <none>   28d   v1.29.1   172.16.0.7    84.201.168.153    Ubuntu 20.04.6 LTS   5.4.0-216-generic   containerd://1.7.25   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=standard-v3,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/zone=ru-central1-d,kubernetes.io/arch=amd64,kubernetes.io/hostname=cl1gj1h7njc4tv9kvj2l-ukul,kubernetes.io/os=linux,node.kubernetes.io/instance-type=standard-v3,node.kubernetes.io/kube-proxy-ds-ready=true,node.kubernetes.io/masq-agent-ds-ready=true,node.kubernetes.io/node-problem-detector-ds-ready=true,topology.kubernetes.io/zone=ru-central1-d,yandex.cloud/node-group-id=catsncnuoktlpha2lue1,yandex.cloud/pci-topology=k8s,yandex.cloud/preemptible=false
+
+** Argocd installation
+- Argocd helm chart aus der [[id:https://yandex.cloud/en/docs/managed-kubernetes/operations/applications/argo-cd][yandex einleitun]]g pullen  und eigene values setzen
+  #+begin_src shell
+   helm pull oci://cr.yandex/yc-marketplace/yandex-cloud/argo/chart/argo-cd --version 7.3.11-2 --untar
+  #+end_src
+
+
+- Helm chart einstellungen setzen damit nur ein node verwendet wird
+  #+begin_src yaml
+  global:
+    tolerations:
+    - key: "node-role"
+      operator: "Equal"
+      value: "infra"
+      effect: "NoSchedule"
+    # Default affinity preset for all components
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+              - "infra"
+  #+end_src
+
+- Helm chart installieren
+  #+begin_src shell
+  helm install --namespace argocd --create-namespace argocd .
+  #+end_src
+
+- Nach der Installation alle pod checken , die Sollen auf einer node laufen
+  #+begin_src shell
+  kubectl get po -n argocd -o wide
+  #+end_src
+
+  #+RESULTS:
+  | NAME                                              | READY | STATUS    | RESTARTS | AGE |            IP | NODE                      | NOMINATED | NODE   | READINESS | GATES |
+  | argocd-application-controller-0                   | 1/1   | Running   |        0 | 8h  | 10.112.128.62 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+  | argocd-applicationset-controller-7577c8c598-wd2fm | 1/1   | Running   |        0 | 8h  | 10.112.128.58 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+  | argocd-dex-server-7cc8797c75-pxt9g                | 1/1   | Running   |        0 | 8h  | 10.112.128.60 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+  | argocd-notifications-controller-58fb46954-whdvc   | 1/1   | Running   |        0 | 8h  | 10.112.128.56 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+  | argocd-redis-dc68c7cf7-4x52n                      | 1/1   | Running   |        0 | 8h  | 10.112.128.61 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+  | argocd-redis-secret-init-kwvvg                    | 0/1   | Completed |        0 | 8h  | 10.112.128.55 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+  | argocd-repo-server-6469f9fbff-cjp8v               | 1/1   | Running   |        0 | 8h  | 10.112.128.57 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+  | argocd-server-55749cc565-wrqtc                    | 1/1   | Running   |        0 | 8h  | 10.112.128.59 | cl1gj1h7njc4tv9kvj2l-ukul | <none>    | <none> |           |       |
+
+- Portforward argocd service
+- Password fuer argocd ermitteln
+  #+begin_src shell
+  k -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+  #+end_src
+- Localhost:8080 auswaehlen und admin und passwor aus dem vorherigen schritt setzen
+** Applikationen aus den hausafgaben installieren
+- Damit die apps laufen muessen labels gesetzt werden
+  #+begin_src shell
+  k label node <worker node> homework=true
+  #+end_src
